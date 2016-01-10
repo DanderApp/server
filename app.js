@@ -30,18 +30,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 
-// passport.use(new FacebookStrategy({
-//     clientID: process.env.FACEBOOK_APP_ID,
-//     clientSecret: process.env.FACEBOOK_APP_SECRET,
-//     callbackURL: process.env.HOST + '/auth/facebook/callback',
-//     enableProof: false
-//   },
-//   function(accessToken, refreshToken, profile, done) {
-//     User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-//       return done(err, user);
-//     });
-//   }
-// ));
+passport.use(new FacebookStrategy({
+    clientID: process.env.FACEBOOK_APP_ID,
+    clientSecret: process.env.FACEBOOK_APP_SECRET,
+    callbackURL: process.env.HOST + '/auth/facebook/callback',
+    enableProof: false
+  },
+  function(accessToken, refreshToken, profile, done) {
+    User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+      return done(err, user);
+    });
+  }
+));
 
 // app.get('/auth/facebook',
 //   passport.authenticate('facebook'));
