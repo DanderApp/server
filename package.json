@@ -19,6 +19,11 @@
     "passport": "^0.3.2",
     "passport-facebook": "^2.0.0",
     "request": "^2.67.0",
+<<<<<<< HEAD
     "serve-favicon": "~2.3.0"
+=======
+    "serve-favicon": "~2.3.0",
+    "xml2js": "^0.4.15"
+>>>>>>> 30fe72ff1b195796305d1cdfbc8985e87b16edab
   }
 }
