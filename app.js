@@ -49,7 +49,7 @@ passport.use(new FacebookStrategy({
       // represent the logged-in user.  In a typical application, you would want
       // to associate the Facebook account with a user record in your database,
       // and return that user instead.
-      console.log('Name: ', profile.displayName);
+      console.log('Name: ', accessToken, '\n');
       return done(null, profile);
     });
   }
@@ -84,7 +84,7 @@ FB.api('oauth/access_token', {
     }
 
     var accessToken = res.access_token;
-    console.log('Access Token = ', accessToken);
+    console.log('Access Token = ', accessToken, '\n');
 });
 
 // FB.setAccessToken('access_token');
@@ -92,15 +92,14 @@ FB.api('oauth/access_token', {
 // console.log(accessToken);
 
 app.get('/auth/facebook',
-  passport.authenticate('facebook'),
+  passport.authenticate('facebook', {authType: 'reauthenticate'}),
   function(req,res) {
 });
 
 app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: '/' }),
+  passport.authenticate('facebook', { authType: 'reauthenticate', failureRedirect: '/' }),
   function(req, res) {
     // Successful authentication, redirect home.
-    console.log("Code = ", req.query.code);
     res.redirect('/');
   });
 
@@ -109,6 +108,11 @@ app.get('/logout', function(req,res) {
 
   res.redirect('/');
 })
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/login')
+}
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
