@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session( {secret: process.env.SESSION_SECRET }));
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Passport
