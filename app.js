@@ -1,20 +1,3 @@
-// CORS Stuff
-
-var allowCrossDomain = function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-
-    // intercept OPTIONS method
-    if ('OPTIONS' == req.method) {
-      res.send(200);
-    }
-    else {
-      next();
-    }
-};
-
-
 var express = require('express');
 var session = require('express-session')
 var path = require('path');
@@ -22,6 +5,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var request = require('request');
+var cors = require('cors');
 var FB = require('fb');
 var bodyParser = require('body-parser');
 
@@ -41,7 +25,7 @@ app.set('view engine', 'hbs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(allowCrossDomain);
+app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -90,8 +74,8 @@ app.use('/', routes);
 app.use('/users', users);
 
 FB.api('oauth/access_token', {
-    client_id: 'app_id',
-    client_secret: 'app_secret',
+    client_id: process.env.FACEBOOK_APP_ID,
+    client_secret: process.env.FACEBOOK_APP_SECRET,
     grant_type: 'client_credentials'
 }, function (res) {
     if(!res || res.error) {
@@ -100,6 +84,7 @@ FB.api('oauth/access_token', {
     }
 
     var accessToken = res.access_token;
+    console.log('Access Token = ', accessToken);
 });
 
 // FB.setAccessToken('access_token');
@@ -109,7 +94,6 @@ FB.api('oauth/access_token', {
 app.get('/auth/facebook',
   passport.authenticate('facebook'),
   function(req,res) {
-
 });
 
 app.get('/auth/facebook/callback',
@@ -120,7 +104,11 @@ app.get('/auth/facebook/callback',
     res.redirect('/');
   });
 
+app.get('/logout', function(req,res) {
+  req.logout();
 
+  res.redirect('/');
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
