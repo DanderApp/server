@@ -1,4 +1,5 @@
 var express = require('express');
+var session = require('express-session')
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -25,10 +26,11 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session( {secret: process.env.SESSION_SECRET }));
+c// app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
+//Passport
 
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
@@ -37,18 +39,48 @@ passport.use(new FacebookStrategy({
     enableProof: false
   },
   function(accessToken, refreshToken, profile, done) {
-    User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-      console.log(facebookId);
-      return done(err, user);
+    process.nextTick(function () {
+
+      // To keep the example simple, the user's Facebook profile is returned to
+      // represent the logged-in user.  In a typical application, you would want
+      // to associate the Facebook account with a user record in your database,
+      // and return that user instead.
+      return done(null, profile);
     });
   }
 ));
 
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  done(err, user.id)
+});
+
+app.use(function(req,res,next) {
+  app.locals.user = req.user;
+  next();
+})
+
+// Routes
+
+app.use('/', routes);
+app.use('/users', users);
+
+// GET /oauth/access_token?
+//     grant_type=fb_exchange_token&amp;
+//     client_id={app-id}&amp;
+//     client_secret={app-secret}&amp;
+//     fb_exchange_token={short-lived-token}
+
 app.get('/auth/facebook',
-  passport.authenticate('facebook'));
+  passport.authenticate('facebook'),
+  function(req,res) {
+});
 
 app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  passport.authenticate('facebook', { failureRedirect: '/' }),
   function(req, res) {
     // Successful authentication, redirect home.
     res.redirect('/');
