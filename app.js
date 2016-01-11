@@ -46,7 +46,7 @@ passport.use(new FacebookStrategy({
       // represent the logged-in user.  In a typical application, you would want
       // to associate the Facebook account with a user record in your database,
       // and return that user instead.
-      console.log(profile.id);
+      console.log(profile);
       return done(null, profile);
     });
   }
@@ -60,21 +60,15 @@ passport.deserializeUser(function(id, done) {
   done(err, user.id)
 });
 
-app.use(function(req,res,next) {
-  app.locals.user = req.user;
-  next();
-})
+// app.use(function(req,res,next) {
+//   app.locals.user = req.user;
+//   next();
+// })
 
 // Routes
 
 app.use('/', routes);
 app.use('/users', users);
-
-// GET /oauth/access_token?
-//     grant_type=fb_exchange_token&amp;
-//     client_id={app-id}&amp;
-//     client_secret={app-secret}&amp;
-//     fb_exchange_token={short-lived-token}
 
 app.get('/auth/facebook',
   passport.authenticate('facebook'),
