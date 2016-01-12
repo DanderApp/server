@@ -66,7 +66,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  done(err, {firstname: 'Test', lastName: 'App'})
+  done(null, {firstname: 'Test', lastName: 'App'})
 });
 
 // app.use(function(req,res,next) {
@@ -140,14 +140,6 @@ function getRequestAPICall() {
     })
   });
 }
-
-// getRequestAPICall().then(function(data) {
-//   console.log(data);
-// })
-
-
-
-
 
 // function ensureAuthenticated(req, res, next) {
 //   if (req.isAuthenticated()) { return next(); }
