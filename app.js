@@ -20,6 +20,7 @@ var users = require('./routes/users');
 // Module Exports
 
 var request = require('./request')
+var filter = require('./filter')
 
 var app = express();
 
@@ -115,7 +116,13 @@ app.get('/logout', function(req,res) {
 
 // Misc Functions
 
-// request();
+request()
+.then(function(data) {
+  // console.log('hitting then');
+  // console.log(data);
+  filter.filterDogs(data);
+})
+
 
 
 // function ensureAuthenticated(req, res, next) {

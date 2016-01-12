@@ -1,23 +1,35 @@
-var request = require('request');
+var unirest = require('unirest');
 var parseString = require('xml2js').parseString;
 require('dotenv').load()
 
 var requestFunction = function() {
-
-  request('http://api.petfinder.com/pet.getRandom?key=' +
-  process.env.PF_Key +
-  '&callback=?&output=basic', function(error, response, body){
-  if(!error && response.statusCode==200){
-    parseString(response.body, function(err, result){
-      JSON.stringify(result);
-      console.log(result.petfinder.pet[0])
+  return new Promise(function(resolve, reject) {
+    unirest.get('http://api.petfinder.com/pet.getRandom')
+      .query({'key': process.env.PF_Key, "callback": "?", "output": 'basic'})
+      .as.json(function(response) {
+        resolve(response);
+      })
     })
-  } else{
-    console.dir("whoops", response.statusCode)
-  }
-})
 }
 
-// requestFunction();
+function stringParser(stringToParse) {
+  return new Promise(function(resolve,reject) {
+    parseString(stringToParse,function(err, result) {
+      // console.log('parsing');
+      resolve(result);
+    })
+  })
+}
 
-module.exports = requestFunction;
+function apiCall() {
+  return new Promise(function(resolve, reject) {
+    requestFunction().then(function(response) {
+      return stringParser(response.body);
+    })
+    .then(function(response) {
+      resolve(response);
+    })
+  })
+}
+
+module.exports = apiCall;
