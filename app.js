@@ -124,6 +124,9 @@ app.get('/apitest', function(req, res) {
     console.log(returnObject);
     res.json(returnObject);
   })
+  .catch(function(err) {
+    console.log(err);
+  })
 
 })
 
@@ -137,6 +140,9 @@ function getRequestAPICall() {
     })
     .then(function(data) {
       resolve(data);
+    })
+    .catch(function(err) {
+      reject(err)
     })
   });
 }
