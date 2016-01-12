@@ -94,6 +94,7 @@ FB.api('oauth/access_token', {
 app.get('/auth/facebook',
   passport.authenticate('facebook', {authType: 'reauthenticate'}),
   function(req,res) {
+    res.send('Request Working')
 });
 
 app.get('/auth/facebook/callback',
