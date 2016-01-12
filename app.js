@@ -1,5 +1,5 @@
 var express = require('express');
-var session = require('express-session')
+var session = require('express-session');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -8,14 +8,19 @@ var request = require('request');
 var cors = require('cors');
 var FB = require('fb');
 var bodyParser = require('body-parser');
-
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 
 require('dotenv').load();
 
+// Route Exports
 var routes = require('./routes/index');
 var users = require('./routes/users');
+
+// Module Exports
+
+var request = require('./request')
+var filter = require('./filter')
 
 var app = express();
 
@@ -106,14 +111,47 @@ app.get('/auth/facebook/callback',
 
 app.get('/logout', function(req,res) {
   req.logout();
-
   res.redirect('/');
 })
 
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login')
+app.get('/apitest', function(req, res) {
+  var returnObject;
+  getRequestAPICall()
+  .then(function(data) {
+    returnObject = data;
+    console.log('API Calling');
+    console.log(returnObject);
+    res.json(returnObject);
+  })
+
+})
+
+// Misc Functions
+
+function getRequestAPICall() {
+  return new Promise(function(resolve,reject){
+    request()
+    .then(function(data) {
+      return filter.filterDogs(data);
+    })
+    .then(function(data) {
+      resolve(data);
+    })
+  });
 }
+
+// getRequestAPICall().then(function(data) {
+//   console.log(data);
+// })
+
+
+
+
+
+// function ensureAuthenticated(req, res, next) {
+//   if (req.isAuthenticated()) { return next(); }
+//   res.redirect('/login')
+// }
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
