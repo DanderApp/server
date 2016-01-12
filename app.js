@@ -110,18 +110,40 @@ app.get('/auth/facebook/callback',
 
 app.get('/logout', function(req,res) {
   req.logout();
-
   res.redirect('/');
+})
+
+app.get('/apitest', function(req, res) {
+  var returnObject;
+  getRequestAPICall()
+  .then(function(data) {
+    returnObject = data;
+    console.log('API Calling');
+    console.log(returnObject);
+    res.json(returnObject);
+  })
+
 })
 
 // Misc Functions
 
-request()
-.then(function(data) {
-  // console.log('hitting then');
-  // console.log(data);
-  filter.filterDogs(data);
-})
+function getRequestAPICall() {
+  return new Promise(function(resolve,reject){
+    request()
+    .then(function(data) {
+      return filter.filterDogs(data);
+    })
+    .then(function(data) {
+      resolve(data);
+    })
+  });
+}
+
+// getRequestAPICall().then(function(data) {
+//   console.log(data);
+// })
+
+
 
 
 
