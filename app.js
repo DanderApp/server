@@ -61,11 +61,11 @@ passport.use(new FacebookStrategy({
 ));
 
 passport.serializeUser(function(user, done) {
-  done(null, user.id);
+  done(null, user);
 });
 
 passport.deserializeUser(function(id, done) {
-  done(err, user.id)
+  done(err, user)
 });
 
 // app.use(function(req,res,next) {
