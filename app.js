@@ -65,7 +65,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  done(err, user)
+  done(err, {firstname: 'Test', lastName: 'App'})
 });
 
 // app.use(function(req,res,next) {
