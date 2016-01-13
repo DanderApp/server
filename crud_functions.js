@@ -1,5 +1,6 @@
 var knex = require('knex');
 var pg = require('pg');
+require('dotenv').load();
 
 pg.connect(process.env.DATABASE_URL, function(err, client) {
   if (err) throw err;
