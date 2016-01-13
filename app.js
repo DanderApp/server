@@ -144,7 +144,7 @@ function getRequestAPICall() {
   return new Promise(function(resolve,reject){
     request()
     .then(function(data) {
-      return filter.filterDogs(data);
+      return filter.filter(data);
     })
     .then(function(data) {
       resolve(data);
