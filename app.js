@@ -16,6 +16,7 @@ require('dotenv').load();
 // Route Exports
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var connections = require('./routers/connections');
 
 // Module Exports
 
@@ -77,6 +78,7 @@ passport.deserializeUser(function(id, done) {
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/connections', connections)
 
 FB.api('oauth/access_token', {
     client_id: process.env.FACEBOOK_APP_ID,
@@ -127,6 +129,8 @@ app.get('/apitest', function(req, res) {
   })
 
 })
+
+
 
 // Misc Functions
 
