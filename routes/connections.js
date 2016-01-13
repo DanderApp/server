@@ -9,7 +9,7 @@ var router = express.Router();
 
 
 router.post('/new', function(req, res){
-  console.log("I heard a new!")
+  console.log(req.body)
 })
 
 router.get('/', function(req, res){
