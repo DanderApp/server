@@ -116,13 +116,15 @@ app.get('/logout', function(req,res) {
 })
 
 app.get('/apitest', function(req, res) {
-  var returnObject;
+  // var returnObject;
   getRequestAPICall()
   .then(function(data) {
-    returnObject = data;
+    // returnObject = data;
     console.log('API Calling');
-    console.log(returnObject);
-    res.json(returnObject);
+    console.log(data);
+    res.json(data);
+  }).catch(function(){
+    res.json('Something broke, yo!')
   })
   .catch(function(err) {
     console.log(err);
