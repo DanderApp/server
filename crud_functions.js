@@ -78,7 +78,7 @@ module.exports      = {
     readAllUsers    : requestUsers(),
     readOneUser     : requestUser()
   },
-Connection          : {
+  Connection        : {
     checkConnection : checkConnection(),
     petConnection   : petConnection(),
     userConnection  : userConnection()
