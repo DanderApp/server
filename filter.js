@@ -9,12 +9,12 @@ module.exports = {
         var data = responseData.petfinder.pets[0].pet[i]
         // console.log(data)
         var newDog          = {};
-        newDog.name         = data.name;
-        newDog.age          = data.age;
-        newDog.sex          = data.sex;
-        newDog.size         = data.size;
-        newDog.description  = data.description;
-        newDog.petfinder_id = data.id;
+        newDog.name         = data.name[0];
+        newDog.age          = data.age[0];
+        newDog.sex          = data.sex[0];
+        newDog.size         = data.size[0];
+        newDog.description  = data.description[0];
+        newDog.petfinder_id = data.id[0];
         returnData.push(newDog)
       }
       resolve(returnData);
