@@ -1,23 +1,28 @@
+var migration = require('../dander-db/migrations/20160111103304_simpleConnection.js');
 var knex = require('knex');
 var pg = require('pg');
+var config = {
+  client: 'pg',
+  connection: process.env.DATABASE_URL,
+  ssl: true
+}
 require('dotenv').load();
 
-pg.connect(process.env.DATABASE_URL, function(err, client) {
-  if (err) throw err;
-  console.log('Connected to postgres! Getting schemas...');
-
-  client
-    .query('SELECT table_schema,table_name FROM information_schema.tables;')
-    .on('row', function(row) {
-      console.log(JSON.stringify(row));
-    });
-});
 
 
+//Connections Functions
+
+
+
+knex(config);
 
 module.exports = {
-  create: create(),
-  read: read(),
-  update: update(),
-  deleteFunc: deleteFunc()
+  //Connection
+  knexConfig: knex(config),
+  //CRUD Functions
+  // create: create(),
+  // read: read(),
+  // update: update(),
+  // deleteFunc: deleteFunc()
+  //
 }
