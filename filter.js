@@ -15,6 +15,8 @@ module.exports = {
         newDog.size         = data.size[0];
         newDog.description  = data.description[0];
         newDog.petfinder_id = data.id[0];
+        newDog.photo        = data.media[0].photos[0].photo[2]["_"];
+        console.log(data.media)
         returnData.push(newDog)
       }
       resolve(returnData);
