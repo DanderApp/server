@@ -4,8 +4,15 @@ require('dotenv').load()
 
 var requestFunction = function() {
   return new Promise(function(resolve, reject) {
-    unirest.get('http://api.petfinder.com/pet.getRandom')
-      .query({'key': process.env.PF_Key, "callback": "?", "output": 'basic'})
+    unirest.get('http://api.petfinder.com/pet.find')
+      .query({
+        'key': process.env.PF_Key,
+        "callback": "?",
+        "output": 'basic',
+        "animal": "dog",
+        "location": "80021",
+        "count": "5"
+      })
       .as.json(function(response) {
         resolve(response);
       })
@@ -28,8 +35,14 @@ function apiCall() {
     })
     .then(function(response) {
       resolve(response);
+      console.log('apiCalled')
+      console.log(response)
     })
   })
 }
 
 module.exports = apiCall;
+
+// apiCall().then(function(data) {
+//   console.log(data.petfinder.pets[0].pet);
+// })
