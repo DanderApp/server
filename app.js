@@ -38,6 +38,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session( {secret: process.env.SESSION_SECRET }));
 app.use(passport.initialize());
+app.use(passport.session())
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Passport
@@ -66,7 +67,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  done(err, {firstname: 'Test', lastName: 'App'})
+  done(null, {firstname: 'Test', lastName: 'App'})
 });
 
 // app.use(function(req,res,next) {
@@ -127,6 +128,9 @@ app.get('/apitest', function(req, res) {
   }).catch(function(){
     res.json('Something broke, yo!')
   })
+  .catch(function(err) {
+    console.log(err);
+  })
 
 })
 
@@ -143,16 +147,11 @@ function getRequestAPICall() {
     .then(function(data) {
       resolve(data);
     })
+    .catch(function(err) {
+      reject(err)
+    })
   });
 }
-
-// getRequestAPICall().then(function(data) {
-//   console.log(data);
-// })
-
-
-
-
 
 // function ensureAuthenticated(req, res, next) {
 //   if (req.isAuthenticated()) { return next(); }
