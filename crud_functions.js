@@ -1,4 +1,3 @@
-var migration = require('../dander-db/migrations/20160111103304_simpleConnection.js');
 var knex = require('knex');
 var pg = require('pg');
 var config = {
@@ -8,13 +7,17 @@ var config = {
 }
 require('dotenv').load();
 
-
+// var user = knex('user');
 
 //Connections Functions
 
+function requestUsers() {
+  knex('user').select()
+}
+
+requestUsers()
 
 
-knex(config);
 
 module.exports = {
   //Connection
