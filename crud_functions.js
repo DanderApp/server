@@ -16,51 +16,44 @@ var connection = function() {
 }
 
 //User Functions
-
 function reqTest() {
-  user().select().then(function(user) {
-    console.log(user);
+  return user().select().then(function(user) {
+    return user;
   })
 }
 
 function requestUsers() {
-  return new Promise(function(reject, resolve) {
-    user().select().then(function(user) {
-      resolve(user);
-    })
+  return user().select().then(function(user) {
+    return user;
   })
 }
 
 function requestUser(id) {
-  return new Promise(function(reject, resolve) {
-    user().select().where('id', id).then(function(user) {
-      resolve(user);
-    })
-  });
+  return user().select().where('id', id).then(function(user) {
+    return user;
+  })
 }
 
 //Connection Data
 
-function connectionTest() {
-  connection().select().then(function(connection) {
-    console.log(connection);
-  })
-}
+// function connectionTest() {
+//   return connection().select().then(function(connection) {
+//     return connection;
+//   })
+// }
 
 function checkConnection(id, petID) {
-  return new Promise(function(reject, resolve) {
-    connection().where({
-      user_id: id,
-      petfinder_id: petID
-    }).select().then(function(user) {
-      resolve(user)
-    })
+  return connection().where({
+    user_id: id,
+    petfinder_id: petID
+  }).select().then(function(user) {
+    return user;
   })
 }
 
-reqTest();
-connectionTest();
-
+// reqTest().then(function(data) {
+//   console.log(data);
+// })
 
 module.exports = {
   //CRUD Functions
