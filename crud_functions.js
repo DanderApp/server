@@ -42,29 +42,45 @@ function requestUser(id) {
 }
 
 //Connection Data
-function checkConnection(id, petID) {
+function checkConnection(userID, petID) {
   return connection().where({
-    user_id: id,
+    user_id: userID,
     petfinder_id: petID
   }).select().then(function(user) {
     return user;
   })
 }
+
+function petConnection(petID) {
+  return connection().where({
+    petfinder_id: petID
+  }).select().then(function(pet) {
+    return pet;
+  })
+}
+
+function userConnection(userID) {
+  return connection().where({
+    user_id: userID
+  }).select().then(function(user) {
+    return user;
+  })
+}
+
 // Testing Zone
 // reqTest().then(function(data) {
 //   console.log(data);
 // })
 
-module.exports = {
+module.exports      = {
   //CRUD Functions
-  User: {
-  // create: create(),
-    readAllUsers: requestUsers(),
-    readOneUser: requestUser()
-  // update: update(),
-  // deleteFunc: deleteFunc()
+  User              : {
+    readAllUsers    : requestUsers(),
+    readOneUser     : requestUser()
   },
-  Connection: {
-    checkConnection: checkConnection()
+Connection          : {
+    checkConnection : checkConnection(),
+    petConnection   : petConnection(),
+    userConnection  : userConnection()
   }
 }
