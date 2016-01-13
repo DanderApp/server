@@ -1,6 +1,4 @@
 var express = require('express')
-//config knex later
-// var knex = require('knex')
 var router = express.Router();
 
 // function Connections(){
@@ -9,7 +7,7 @@ var router = express.Router();
 
 
 router.post('/new', function(req, res){
-  console.log(req.body)
+  create.create()
 })
 
 router.get('/', function(req, res){
