@@ -4,11 +4,11 @@ var router = express.Router();
 
 router.get('/', function(req, res){
   console.log("I heard a get!")
-  if req.user.level === 'admin'
-    res.json(all-the-data)
-  else {
-    res.send('404')
-  }
+  // if req.user.level === 'admin'
+  //   res.json(all-the-data)
+  // else {
+  //   res.send('404')
+  // }
 })
 
 router.get('/:id', function(req, res){

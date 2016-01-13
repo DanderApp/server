@@ -26,5 +26,5 @@
 
 
 module.exports = {
-  filter: filterDogs;
+  filter: filterDogs
 }
