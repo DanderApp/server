@@ -5,9 +5,9 @@ module.exports = {
     return new Promise(function(resolve, reject) {
       // Remove the index when looping
       var returnData = [];
-      for(i=0; i<responseData.petfinder.pets.length; i++){
-        var data = responseData.petfinder.pets.pet[i]
-        console.log(data)
+      for(i=0; i<responseData.petfinder.pets[0].pet.length; i++){
+        var data = responseData.petfinder.pets[0].pet[i]
+        // console.log(data)
         var newDog          = {};
         newDog.name         = data.name;
         newDog.age          = data.age;

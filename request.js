@@ -35,8 +35,8 @@ function apiCall() {
     })
     .then(function(response) {
       resolve(response);
-      console.log('apiCalled')
-      console.log(response)
+      // console.log('apiCalled')
+      // console.log(response)
     })
   })
 }
