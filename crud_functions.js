@@ -1,22 +1,70 @@
-var knex = require('knex');
+var knex = require('./db/knex');
 var pg = require('pg');
+var config = {
+  client: 'pg',
+  connection: process.env.DATABASE_URL,
+  ssl: true
+}
+require('dotenv').load();
 
-pg.connect(process.env.DATABASE_URL, function(err, client) {
-  if (err) throw err;
-  console.log('Connected to postgres! Getting schemas...');
+var user = function() {
+  return knex('user')
+}
 
-  client
-    .query('SELECT table_schema,table_name FROM information_schema.tables;')
-    .on('row', function(row) {
-      console.log(JSON.stringify(row));
-    });
-});
+var connection = function() {
+  return knex('connection')
+}
 
+//User Functions
+function reqTest() {
+  return user().select().then(function(user) {
+    return user;
+  })
+}
 
+function requestUsers() {
+  return user().select().then(function(user) {
+    return user;
+  })
+}
+
+function requestUser(id) {
+  return user().select().where('id', id).then(function(user) {
+    return user;
+  })
+}
+
+//Connection Data
+
+// function connectionTest() {
+//   return connection().select().then(function(connection) {
+//     return connection;
+//   })
+// }
+
+function checkConnection(id, petID) {
+  return connection().where({
+    user_id: id,
+    petfinder_id: petID
+  }).select().then(function(user) {
+    return user;
+  })
+}
+
+// reqTest().then(function(data) {
+//   console.log(data);
+// })
 
 module.exports = {
-  create: create(),
-  read: read(),
-  update: update(),
-  deleteFunc: deleteFunc()
+  //CRUD Functions
+  User: {
+  // create: create(),
+    readAllUsers: requestUsers(),
+    readOneUser: requestUser()
+  // update: update(),
+  // deleteFunc: deleteFunc()
+  },
+  Connection: {
+    checkConnection: checkConnection()
+  }
 }
