@@ -16,7 +16,7 @@ require('dotenv').load();
 // Route Exports
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var connections = require('./routers/connections');
+var connections = require('./routes/connections');
 
 // Module Exports
 
