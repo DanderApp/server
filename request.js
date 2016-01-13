@@ -2,7 +2,7 @@ var unirest = require('unirest');
 var parseString = require('xml2js').parseString;
 require('dotenv').load()
 
-var requestFunction = function() {
+var requestFunction = function(zipcode) {
   return new Promise(function(resolve, reject) {
     unirest.get('http://api.petfinder.com/pet.find')
       .query({
@@ -10,7 +10,7 @@ var requestFunction = function() {
         "callback": "?",
         "output": 'basic',
         "animal": "dog",
-        "location": "80021",
+        "location": zipcode || "80205",
         "count": "5"
       })
       .as.json(function(response) {
