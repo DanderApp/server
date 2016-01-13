@@ -15,13 +15,20 @@ var connection = function() {
   return knex('connection')
 }
 
-//User Functions
-function reqTest() {
-  return user().select().then(function(user) {
-    return user;
-  })
-}
+// Test Functions
+// function connectionTest() {
+//   return connection().select().then(function(connection) {
+//     return connection;
+//   })
+// }
 
+// function reqTest() {
+//   return user().select().then(function(user) {
+//     return user;
+//   })
+// }
+
+// User Functions
 function requestUsers() {
   return user().select().then(function(user) {
     return user;
@@ -35,13 +42,6 @@ function requestUser(id) {
 }
 
 //Connection Data
-
-// function connectionTest() {
-//   return connection().select().then(function(connection) {
-//     return connection;
-//   })
-// }
-
 function checkConnection(id, petID) {
   return connection().where({
     user_id: id,
@@ -50,7 +50,7 @@ function checkConnection(id, petID) {
     return user;
   })
 }
-
+// Testing Zone
 // reqTest().then(function(data) {
 //   console.log(data);
 // })
