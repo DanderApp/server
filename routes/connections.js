@@ -7,7 +7,7 @@ var router = express.Router();
 
 
 router.post('/new', function(req, res){
-  create.create()
+  res.send("OK!")
 })
 
 router.get('/', function(req, res){

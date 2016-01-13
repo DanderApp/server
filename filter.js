@@ -6,7 +6,7 @@
       var returnData = [];
       for(i=0; i<responseData.petfinder.pets[0].pet.length; i++){
         var data = responseData.petfinder.pets[0].pet[i]
-        if(data.status==="A"){
+        if(data.status[0]==="A"){
           var newDog          = {};
           newDog.name         = data.name[0];
           newDog.age          = data.age[0];
