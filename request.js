@@ -33,9 +33,9 @@ var singletonRequest = function(pfid) {
   })
 }
 
-singletonRequest(30519898).then(function(response) {
-  console.log(response.body);
-})
+// singletonRequest(30519898).then(function(response) {
+//   console.log(response.body);
+// })
 
 function stringParser(stringToParse) {
   return new Promise(function(resolve,reject) {
