@@ -90,10 +90,20 @@ function(req,res,next) {
         })
       })
     } else {
+      res.redirect('https://dander.firebaseapp.com/login.html')
       next('Invalid Login');
     }
   })(req, res, next);
 });
+
+// router.post('/signup',
+// funtion(req,res,next) {
+//   passport.authenticate('local',
+//   function(err, user, info) {
+//     if (err) return next(err);
+//     if
+//   })
+// })
 
 // router.get('/facebook',
 //   passport.authenticate('facebook', {authType: 'reauthenticate'}),
