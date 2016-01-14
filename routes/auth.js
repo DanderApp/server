@@ -82,7 +82,7 @@ router.post('/login',
 function(req,res,next) {
   passport.authenticate('local',
   function(err, user, info) {
-    if (err) return next(err);
+    // if (err) return next(err);
     if(user) {
       createToken(user).then(function(token) {
         res.json({
@@ -90,10 +90,32 @@ function(req,res,next) {
         })
       })
     } else {
-      next('Invalid Login');
+      res.status(401).send('Invalid Login');
+      // next('Invalid Login');
     }
   })(req, res, next);
 });
+
+// router.post('/signup',
+// function(req,res,next) {
+//   User().where({
+//     'email': req.body.email
+//   }).first().then(function(user){
+//     if (user) {
+//       res.status(401).send('Email is already registered.')
+//     } else {
+//       bcrypt.
+//       User().insert({
+//         first_name: req.body.first_name,
+//         last_name: req.body.last_name,
+//         email: req.body.email,
+//         zipcode: req.body.zipcode,
+//         password: bcrypt.
+//       })
+//     }
+//   })
+//   })
+// })
 
 // router.get('/facebook',
 //   passport.authenticate('facebook', {authType: 'reauthenticate'}),
