@@ -13,7 +13,7 @@ function filterDogs(responseData) {
         newDog.description  = data.description[0];
         newDog.petfinder_id = data.id[0];
         newDog.photo        = data.media[0].photos[0].photo[2]["_"];
-        console.log(data.media)
+        newDog.contact      = data.contact[0];
         returnData.push(newDog)
         }
     }
@@ -36,7 +36,7 @@ function filterReturnArray(responseData) {
         newDog.description  = data.description[0];
         newDog.petfinder_id = data.id[0];
         newDog.photo        = data.media[0].photos[0].photo[2]["_"];
-        console.log(data.media)
+        newDog.contact      = data.contact[0];
         returnData.push(newDog)
       }
     }
