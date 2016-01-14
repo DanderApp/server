@@ -1,7 +1,8 @@
 var express = require('express')
 var router = express.Router();
-var crud = require('../crud_functions')
-
+var crud = require('../crud_functions');
+var retrieve = require('../retrieve');
+var filter = require('../filter')
 //works
 router.post('/new', function(req, res){
   console.log("New doge!")
@@ -16,6 +17,26 @@ router.post('/new', function(req, res){
 router.get('/', function(req, res){
   console.log("I heard a get all!")
   crud.Connection.userConnection(req.user.id)
+  .then(function(data){
+    var petfinderArray = [];
+    for(i=0; i<data.length; i++){
+      petfinderArray.push(data[i].petfinder_id);
+    }
+    return petfinderArray;
+  })
+  .then(function(petfinderArray){
+    var promiseStack = [];
+    for(i=0; i<petfinderArray; i++){
+      promiseStack.push(retrieve(petfinderArray[i]));
+    }
+
+    Promise.all(promiseStack).then(function(array){
+      resolve(array)
+    })
+  })
+  .then(function(petfinderArray){
+    return filter.filter(petfinderArray)
+  })
   .then(function(data){
     res.json(data);
   })

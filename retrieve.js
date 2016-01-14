@@ -2,16 +2,13 @@ var unirest = require('unirest');
 var parseString = require('xml2js').parseString;
 require('dotenv').load()
 
-var requestFunction = function(zipcode) {
+var requestFunction = function(petID) {
   return new Promise(function(resolve, reject) {
-    unirest.get('http://api.petfinder.com/pet.find')
+    unirest.get('http://api.petfinder.com/pet.get')
       .query({
         'key': process.env.PF_Key,
         "callback": "?",
-        "output": 'basic',
-        "animal": "dog",
-        "location": zipcode || "80205",
-        "count": "5"
+        "id" : "petID"
       })
       .as.json(function(response) {
         resolve(response);
@@ -22,15 +19,14 @@ var requestFunction = function(zipcode) {
 function stringParser(stringToParse) {
   return new Promise(function(resolve,reject) {
     parseString(stringToParse,function(err, result) {
-      // console.log('parsing');
       resolve(result);
     })
   })
 }
 
-function apiCall() {
+function getPet(petID) {
   return new Promise(function(resolve, reject) {
-    requestFunction().then(function(response) {
+    requestFunction(petID).then(function(response) {
       return stringParser(response.body);
     })
     .then(function(response) {
@@ -39,8 +35,4 @@ function apiCall() {
   })
 }
 
-module.exports = apiCall;
-
-// apiCall().then(function(data) {
-//   console.log(data.petfinder.pets[0].pet);
-// })
+module.exports = getPet;
