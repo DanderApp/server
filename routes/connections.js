@@ -5,7 +5,7 @@ var retrieve = require('../retrieve');
 var filter = require('../filter')
 //works
 router.post('/new', function(req, res){
-  console.log("New doge!")
+  console.log(req.user.first_name + ' ' + req.user.last_name + ' has interacted with pet ' +  req.body.petfinder_id)
   crud.Connection.createConnection(req.user.id, req.body.petfinder_id, req.body.liked)
   .then(function(data){
     console.log(data);
