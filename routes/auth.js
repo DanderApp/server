@@ -4,13 +4,19 @@ var express = require('express');
 var router = express.Router();
 var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
+var bodyParser = require('body-parser')
 
 var LocalStrategy = require('passport-local').Strategy;
 var BearerStrategy = require('passport-http-bearer').Strategy;
 
+var app = express();
+
 var User = function() {
   return knex('user');
 }
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 passport.use(new LocalStrategy({
   usernameField: 'email',
@@ -96,26 +102,31 @@ function(req,res,next) {
   })(req, res, next);
 });
 
-// router.post('/signup',
-// function(req,res,next) {
-//   User().where({
-//     'email': req.body.email
-//   }).first().then(function(user){
-//     if (user) {
-//       res.status(401).send('Email is already registered.')
-//     } else {
-//       bcrypt.
-//       User().insert({
-//         first_name: req.body.first_name,
-//         last_name: req.body.last_name,
-//         email: req.body.email,
-//         zipcode: req.body.zipcode,
-//         password: bcrypt.
-//       })
-//     }
-//   })
-//   })
-// })
+router.post('/signup',
+function(req,res,next) {
+  User().where({
+    'email': req.body.email
+  }).first().then(function(user){
+    if (user) {
+      res.status(401).send('Email is already registered.')
+    } else {
+      var hash;
+      bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(req.body.password, salt, function(err, encrypted) {
+          User().insert({
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            email: req.body.email,
+            zipcode: req.body.zipcode,
+            password: hash
+          }).then(function() {
+            res.status(200).send('User added successfully')            
+          })
+        })
+      })
+    }
+  })
+})
 
 // router.get('/facebook',
 //   passport.authenticate('facebook', {authType: 'reauthenticate'}),
