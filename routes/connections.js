@@ -3,6 +3,7 @@ var router = express.Router();
 var crud = require('../crud_functions');
 var retrieve = require('../retrieve');
 var filter = require('../filter')
+var bodyParser = require('body-parser')
 //works
 router.post('/new', function(req, res){
   console.log(req.user.first_name + ' ' + req.user.last_name + ' has interacted with pet ' +  req.body.petfinder_id)
