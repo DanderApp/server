@@ -10,6 +10,9 @@ var FB = require('fb');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
+var corsOptions = {
+  origin: 'http://dander.firebaseapp.com'
+};
 
 require('dotenv').load();
 
@@ -32,6 +35,7 @@ app.set('view engine', 'hbs');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(cors());
+app.options
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -96,6 +100,7 @@ app.use('/account', account);
 // console.log(accessToken);
 
 app.get('/auth/facebook',
+  cors(corsOptions),
   passport.authenticate('facebook', {authType: 'reauthenticate'}),
   function(req,res) {
 
@@ -104,8 +109,7 @@ app.get('/auth/facebook',
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { authType: 'reauthenticate', failureRedirect: '/' }),
   function(req, res) {
-    res.send(req.user);
-    res.redirect('https://dander.firebaseapp.com/?userID=' + req.user.id);
+    res.redirect('https://dander.firebaseapp.com/?token=' + req.user.token);
 });
 
 app.post('/creds')
