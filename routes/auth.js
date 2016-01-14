@@ -117,11 +117,11 @@ function(req,res,next) {
   })(req, res, next);
 });
 
-router.post('/logout', authenticateUser,
-function(req, res, next) {
-  req.logout()
-  res.status(200).send("Logged out successfully")
-})
+// router.post('/logout', authenticateUser,
+// function(req, res, next) {
+//   req.logout()
+//   res.status(200).send("Logged out successfully")
+// })
 
 router.post('/signup',
 function(req,res,next) {
