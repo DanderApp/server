@@ -169,5 +169,6 @@ function(req,res,next) {
 
 module.exports = {
   router: router,
+
   authenticate: authenticateUser
 }

@@ -29,6 +29,17 @@ function reqTest() {
 }
 
 // User Functions
+
+function createUser(email, zipcode, password) {
+  return user().insert({
+    email       :  email,
+    zipcode     :  zipcode,
+    password    :  password,
+    first_name  :  first_name,
+    last_name   :  last_name
+  }, 'id')
+}
+
 function requestUsers() {
   return user().select().then(function(user) {
     return user;
@@ -59,7 +70,7 @@ function createConnection(userID, petID, liked){
       user_id:        userID,
       petfinder_id:   petID,
       liked:          liked
-    })
+    }, "id")
 }
 
 function checkConnection(userID, petID) {

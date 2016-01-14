@@ -42,6 +42,7 @@ app.use(function(req, res, next) {
 });
 
 //Public Routes
+
 app.use('/auth', auth.router);
 app.get('/dogs', function(req, res) {
   // var returnObject;

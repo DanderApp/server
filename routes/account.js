@@ -3,6 +3,14 @@ var router = express.Router();
 var crud = require('../crud_functions')
 
 
+
+// router.post('/create', function(req, res){
+//   console.log('I heard a create!')
+//
+// })
+
+
+//works
 router.get('/', function(req, res){
   console.log("I heard a get!")
   crud.User.readAllUsers().then(function(data){
@@ -10,8 +18,9 @@ router.get('/', function(req, res){
   })
 })
 
+//works
 router.get('/:id', function(req, res){
-  crud.User.readOneUser(req.user.id).then(function(data){
+  crud.User.readOneUser(req.params.id).then(function(data){
     res.json(data);
   })
 
@@ -22,18 +31,19 @@ router.get('/:id', function(req, res){
   // }
 })
 
-router.put('/:id/update', function(req, res){
+//works as email
+router.put('/update', function(req, res){
   console.log("I heard an update!")
   crud.User.updateUser(req.user.id, req.user.email).then(function(){
-
+    res.json('email updated!')
   })
 })
 
-router.delete('/:id/delete', function(req, res){
+//works
+router.delete('/:id', function(req, res){
   console.log("I heard a delete!")
-
-  crud.User.deleteUser(req.user.id).then(function(){
-
+  crud.User.deleteUser(req.params.id).then(function(){
+    res.json('deleted successful')
   })
 })
 
