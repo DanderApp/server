@@ -37,7 +37,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session(
-  {secret: process.env.SESSION_SECRET 
+  {secret: process.env.SESSION_SECRET
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -58,8 +58,8 @@ passport.use(new FacebookStrategy({
       // represent the logged-in user.  In a typical application, you would want
       // to associate the Facebook account with a user record in your database,
       // and return that user instead.
-      console.log('Name: ', accessToken, '\n');
-      return done(null, profile);
+      // console.log('Name: ', accessToken, '\n');
+      return done(null, {profile: profile, token: accessToken});
     });
   }
 ));
@@ -69,7 +69,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  done(null, {firstname: 'Test', lastName: 'App'})
+  done(null, user)
 });
 
 app.use('/', routes);
@@ -78,19 +78,18 @@ app.use('/connections', connections);
 app.use('/account', account);
 
 
-FB.api('oauth/access_token', {
-    client_id: process.env.FACEBOOK_APP_ID,
-    client_secret: process.env.FACEBOOK_APP_SECRET,
-    grant_type: 'client_credentials'
-}, function (res) {
-    if(!res || res.error) {
-        console.log(!res ? 'error occurred' : res.error);
-        return;
-    }
-
-    var accessToken = res.access_token;
-    console.log('Access Token = ', accessToken, '\n');
-});
+// FB.api('oauth/access_token', {
+//     client_id: process.env.FACEBOOK_APP_ID,
+//     client_secret: process.env.FACEBOOK_APP_SECRET,
+//     grant_type: 'client_credentials'
+// }, function (res) {
+//     if(!res || res.error) {
+//         console.log(!res ? 'error occurred' : res.error);
+//         return;
+//     }
+//     var accessToken = res.access_token;
+//     console.log('Access Token = ', accessToken, '\n');
+// });
 
 // FB.setAccessToken('access_token');
 // var accessToken = FB.getAccessToken();
@@ -99,15 +98,19 @@ FB.api('oauth/access_token', {
 app.get('/auth/facebook',
   passport.authenticate('facebook', {authType: 'reauthenticate'}),
   function(req,res) {
-    res.send('Request Working')
+
 });
 
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { authType: 'reauthenticate', failureRedirect: '/' }),
   function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
-  });
+    res.send(req.user);
+    res.redirect('https://dander.firebaseapp.com/?userID=' + req.user.id);
+});
+
+app.post('/creds')
+
+app.get('/')
 
 app.get('/logout', function(req,res) {
   req.logout();
