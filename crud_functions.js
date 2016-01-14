@@ -16,17 +16,17 @@ var connection = function() {
 }
 
 // Test Functions
-// function connectionTest() {
-//   return connection().select().then(function(connection) {
-//     return connection;
-//   })
-// }
+function connectionTest() {
+  return connection().select().then(function(connection) {
+    return connection;
+  })
+}
 
-// function reqTest() {
-//   return user().select().then(function(user) {
-//     return user;
-//   })
-// }
+function reqTest() {
+  return user().select().then(function(user) {
+    return user;
+  })
+}
 
 // User Functions
 function requestUsers() {
@@ -68,9 +68,13 @@ function userConnection(userID) {
 }
 
 // Testing Zone
-// reqTest().then(function(data) {
-//   console.log(data);
-// })
+reqTest().then(function(data) {
+  console.log(data);
+})
+
+connectionTest().then(function(data) {
+  console.log(data);
+})
 
 module.exports      = {
   //CRUD Functions
