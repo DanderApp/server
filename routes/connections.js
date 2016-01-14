@@ -1,13 +1,11 @@
 var express = require('express')
 var router = express.Router();
 var crud = require('../crud_functions')
-var auth = require('./auth')
 
 //works
 router.post('/new', function(req, res){
   console.log("New doge!")
-  var id = req.body.id
-  crud.Connection.createConnection(id, req.body.petfinder_id, req.body.liked)
+  crud.Connection.createConnection(req.user.id, req.body.petfinder_id, req.body.liked)
   .then(function(data){
     console.log(data);
     res.json({id:data[0]});
@@ -15,11 +13,9 @@ router.post('/new', function(req, res){
 })
 
 // works
-router.get('/', auth.authenticate, function(req, res){
+router.get('/', function(req, res){
   console.log("I heard a get all!")
-  //change this to req.user.id when we can
-  var id = req.query.id
-  crud.Connection.userConnection(id)
+  crud.Connection.userConnection(req.user.id)
   .then(function(data){
     res.json(data);
   })
@@ -38,7 +34,7 @@ router.get('/', auth.authenticate, function(req, res){
 //works
 router.get('/:id', function(req, res){
   console.log("I heard a get one!")
-  crud.Connection.checkConnection(req.params.id, req.query.petfinder_id)
+  crud.Connection.checkConnection(req.user.id, req.params.petfinder_id)
   .then(function(data){
     res.json(data);
   })
@@ -47,7 +43,7 @@ router.get('/:id', function(req, res){
 //works
 router.put('/:id', function(req, res){
   console.log("I heard an update!")
-  crud.Connection.updateConnection(req.body.id, req.body.petfinder_id, req.body.liked)
+  crud.Connection.updateConnection(req.user.id, req.body.petfinder_id, req.body.liked)
   .then(function(){
     res.json('Totally updated!')
   })

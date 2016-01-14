@@ -4,10 +4,10 @@ var crud = require('../crud_functions')
 
 
 
-router.post('/create', function(req, res){
-  console.log('I heard a create!')
-  
-})
+// router.post('/create', function(req, res){
+//   console.log('I heard a create!')
+//
+// })
 
 
 //works
@@ -34,17 +34,16 @@ router.get('/:id', function(req, res){
 //works as email
 router.put('/update', function(req, res){
   console.log("I heard an update!")
-  crud.User.updateUser(req.body.id, req.body.email).then(function(){
+  crud.User.updateUser(req.user.id, req.user.email).then(function(){
     res.json('email updated!')
   })
 })
 
 //works
-router.delete('/:id/delete', function(req, res){
+router.delete('/:id', function(req, res){
   console.log("I heard a delete!")
-
   crud.User.deleteUser(req.params.id).then(function(){
-    res.json('baleted successful')
+    res.json('deleted successful')
   })
 })
 

@@ -140,7 +140,7 @@ module.exports = {
   authenticate: function(req, res, next) {
     passport.authenticate('bearer', function(err, user, info) {
       req.user = user;
-      console.log(user);
+      console.log("the auth user is:", user);
       next()
     })(req, res, next)
   }
