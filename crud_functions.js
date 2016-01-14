@@ -97,13 +97,13 @@ function updateConnection(userID, petID, liked){
 }
 
 // Testing Zone
-reqTest().then(function(data) {
-  console.log(data);
-})
-
-connectionTest().then(function(data) {
-  console.log(data);
-})
+// reqTest().then(function(data) {
+//   console.log(data);
+// })
+//
+// connectionTest().then(function(data) {
+//   console.log(data);
+// })
 
 module.exports      = {
   //CRUD Functions
