@@ -19,10 +19,27 @@ var requestFunction = function(zipcode) {
     })
 }
 
+var singletonRequest = function(pfid) {
+  return new Promise(function(resolve, reject) {
+    unirest.get('http://api.petfinder.com/pet.get')
+      .query({
+        'key': process.env.PF_Key,
+        'callback': '?',
+        'id': pfid
+      })
+      .as.json(function(response){
+        resolve(response)
+      });
+  })
+}
+
+// singletonRequest(30519898).then(function(response) {
+//   console.log(response.body);
+// })
+
 function stringParser(stringToParse) {
   return new Promise(function(resolve,reject) {
     parseString(stringToParse,function(err, result) {
-      // console.log('parsing');
       resolve(result);
     })
   })
@@ -39,8 +56,19 @@ function apiCall() {
   })
 }
 
-module.exports = apiCall;
+function singletonAPICall(pfid) {
+  return new Promise(function(resolve, reject) {
+    singletonRequest(pfid).then(function(response) {
+      return stringParser(response.body);
+    })
+    .then(function(response) {
+      resolve(response);
+    })
+  })
+}
 
-// apiCall().then(function(data) {
-//   console.log(data.petfinder.pets[0].pet);
+// singletonAPICall(30519898).then(function(data) {
+//   console.log(data);
 // })
+
+module.exports = apiCall;
