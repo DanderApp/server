@@ -58,12 +58,12 @@ app.get('/dogs', function(req, res) {
     console.log(err);
   })
 })
+app.use('/connections', connections);
 
 //Authenticated Routes
 app.use(auth.authenticate);
 app.use('/', routes);
 app.use('/users', users);
-app.use('/connections', connections);
 app.use('/account', account);
 
 // API Call Functions
