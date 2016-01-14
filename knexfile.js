@@ -12,9 +12,15 @@ module.exports = {
       port: process.env.PG_PORT,
       database: process.env.PG_DATABASE,
       ssl: true
+    },
+    pool: {
+      min: 2,
+      max: 10
+    },
+    migrations: {
+      tableName: 'knex_migrations'
     }
   },
-
 
 
   // production: {
