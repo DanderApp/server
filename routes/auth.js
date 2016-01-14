@@ -97,11 +97,23 @@ function(req,res,next) {
 });
 
 // router.post('/signup',
-// funtion(req,res,next) {
-//   passport.authenticate('local',
-//   function(err, user, info) {
-//     if (err) return next(err);
-//     if
+// function(req,res,next) {
+//   User().where({
+//     'email': req.body.email
+//   }).first().then(function(user){
+//     if (user) {
+//       res.status(401).send('Email is already registered.')
+//     } else {
+//       bcrypt.
+//       User().insert({
+//         first_name: req.body.first_name,
+//         last_name: req.body.last_name,
+//         email: req.body.email,
+//         zipcode: req.body.zipcode,
+//         password: bcrypt.
+//       })
+//     }
+//   })
 //   })
 // })
 
