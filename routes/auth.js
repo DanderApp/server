@@ -90,8 +90,8 @@ function(req,res,next) {
         })
       })
     } else {
-      res.redirect('https://dander.firebaseapp.com/login.html')
-      next('Invalid Login');
+      res.status(401).send('Invalid Login');
+      // next('Invalid Login');
     }
   })(req, res, next);
 });
