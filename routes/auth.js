@@ -71,7 +71,7 @@ function authenticateUser(req, res, next) {
       } else {
         res.status(401).send('Not logged in')
       }
-    } else {      
+    } else {
       req.user = user;
       next()
     }
@@ -139,7 +139,7 @@ function(req,res,next) {
             last_name: req.body.last_name,
             email: req.body.email,
             zipcode: req.body.zipcode,
-            password: hash
+            password: encrypted
           }).then(function() {
             res.status(200).send('User added successfully')
           })

@@ -1,4 +1,3 @@
-// var request = require('./request.js')
 
 
   function filterDogs(responseData) {

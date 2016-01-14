@@ -22,7 +22,6 @@ var requestFunction = function(zipcode) {
 function stringParser(stringToParse) {
   return new Promise(function(resolve,reject) {
     parseString(stringToParse,function(err, result) {
-      // console.log('parsing');
       resolve(result);
     })
   })
@@ -35,14 +34,8 @@ function apiCall() {
     })
     .then(function(response) {
       resolve(response);
-      // console.log('apiCalled')
-      // console.log(response)
     })
   })
 }
 
 module.exports = apiCall;
-
-// apiCall().then(function(data) {
-//   console.log(data.petfinder.pets[0].pet);
-// })

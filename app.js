@@ -41,14 +41,9 @@ app.use(function(req, res, next) {
   next();
 });
 
+//Public Routes
 app.use('/auth', auth.router);
-app.use('/', routes);
-app.use('/users', users);
-app.use('/connections', connections);
-app.use('/account', account);
-
-
-app.get('/apitest', function(req, res) {
+app.get('/dogs', function(req, res) {
   // var returnObject;
   getRequestAPICall()
   .then(function(data) {
@@ -65,9 +60,14 @@ app.get('/apitest', function(req, res) {
 
 })
 
+//Authenticated Routes
+app.use(auth.authenticate);
+app.use('/', routes);
+app.use('/users', users);
+app.use('/connections', connections);
+app.use('/account', account);
 
-
-// Misc Functions
+// API Call Functions
 
 function getRequestAPICall() {
   return new Promise(function(resolve,reject){
