@@ -16,25 +16,29 @@ router.post('/new', function(req, res){
 // works
 router.get('/', function(req, res){
   console.log("I heard a get all!")
-  crud.Connection.userConnection(req.user.id)
-  .then(function(data){
-    var petfinderArray = [];
-    for(i=0; i<data.length; i++){
-      petfinderArray.push(data[i].petfinder_id);
-    }
-    return petfinderArray;
-  })
-  .then(function(petfinderArray){
-    var promiseStack = [];
-    for(i=0; i<petfinderArray; i++){
-      promiseStack.push(retrieve(petfinderArray[i]));
-    }
+  crud.Connection.userConnection(req.query.id)
 
-    Promise.all(promiseStack).then(function(array){
-      resolve(array)
-    })
+  .then(function(data){
+    // var petfinderArray = [];
+    // for(i=0; i<data.length; i++){
+    //   petfinderArray.push(data[i].petfinder_id);
+    // }
+    // return petfinderArray;
+
   })
   .then(function(petfinderArray){
+    // var promiseStack = [];
+    // for(i=0; i<petfinderArray; i++){
+    //   promiseStack.push(retrieve(petfinderArray[i]));
+    // }
+    // console.log(promiseStack)
+    // Promise.all(promiseStack).then(function(array){
+    //   resolve(array)
+
+    // })
+  })
+  .then(function(petfinderArray){
+    // console.log(petfinderArray)
     return filter.filter(petfinderArray)
   })
   .then(function(data){
