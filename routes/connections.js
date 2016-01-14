@@ -1,7 +1,7 @@
 var express = require('express')
 var router = express.Router();
 var crud = require('../crud_functions')
-
+var auth = require('./auth')
 
 //works
 router.post('/new', function(req, res){
@@ -15,7 +15,7 @@ router.post('/new', function(req, res){
 })
 
 // works
-router.get('/', function(req, res){
+router.get('/', auth.authenticate, function(req, res){
   console.log("I heard a get all!")
   //change this to req.user.id when we can
   var id = req.query.id
