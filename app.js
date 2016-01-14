@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 
-
 require('dotenv').load();
 
 // Route Exports
@@ -42,7 +41,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use(auth.authenticate);
 app.use('/auth', auth.router);
 app.use('/', routes);
 app.use('/users', users);
