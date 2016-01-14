@@ -1,17 +1,23 @@
 var express = require('express')
 var router = express.Router();
+var crud = require('../crud_functions')
 
-// function Connections(){
-//   return knex('connection')
-// }
 
 
 router.post('/new', function(req, res){
-  res.send("OK!")
+  res.send("New doge!")
+  crud.Connection.createConnection(req.user.id, req.body.petfinder_id, req.body.liked)
+  .then(function(){
+
+  })
 })
 
 router.get('/', function(req, res){
   console.log("I heard a get all!")
+  crud.Connection.userConnection(req.user.id)
+  .then(function(data){
+    res.json(data);
+  })
   //TEST DATA
   res.json([{
       name: "Nellie",
@@ -26,11 +32,18 @@ router.get('/', function(req, res){
 
 router.get('/:id', function(req, res){
   console.log("I heard a get one!")
-
+  crud.Connection.checkConnection(req.user.id, req.body.petfinder_id)
+  .then(function(data){
+    res.json(data);
+  })
 })
 
 router.put('/:id', function(req, res){
   console.log("I heard an update!")
+  crud.Connection.updateConnection(req.user.id, req.body.petfinder_id, req.body.liked)
+  .then(function(){
+
+  })
 })
 
 module.exports = router;

@@ -2,7 +2,7 @@ var knex = require('./db/knex');
 var pg = require('pg');
 var config = {
   client: 'pg',
-  connection: process.env.DATABASE_URL,
+  connection: process.env.DATABASE_URL || 'postgres://localhost/dander',
   ssl: true
 }
 require('dotenv').load();
@@ -41,7 +41,27 @@ function requestUser(id) {
   })
 }
 
+function updateUser(id, email){
+  //add some if /else logic to handle multiple types of updates?
+  return user().where('id', id).update({
+    email: email
+  })
+}
+
+function deleteUser(id){
+  return user().where('id', id).del();
+}
+
 //Connection Data
+
+function createConnection(userID, petID, liked){
+    return connection().insert({
+      user_id:        userID,
+      petfinder_id:   petID,
+      liked:          liked
+    })
+}
+
 function checkConnection(userID, petID) {
   return connection().where({
     user_id: userID,
@@ -67,6 +87,15 @@ function userConnection(userID) {
   })
 }
 
+function updateConnection(userID, petID, liked){
+  return connection().where({
+    user_id       : userID,
+    petfinder_id  : petID
+  }).update({
+    liked: liked
+  })
+}
+
 // Testing Zone
 reqTest().then(function(data) {
   console.log(data);
@@ -79,12 +108,16 @@ connectionTest().then(function(data) {
 module.exports      = {
   //CRUD Functions
   User              : {
-    readAllUsers    : requestUsers(),
-    readOneUser     : requestUser()
+    readAllUsers    : requestUsers,
+    readOneUser     : requestUser,
+    updateUser      : updateUser,
+    deleteUser      : deleteUser,
   },
   Connection        : {
-    checkConnection : checkConnection(),
-    petConnection   : petConnection(),
-    userConnection  : userConnection()
+    checkConnection : checkConnection,
+    petConnection   : petConnection,
+    userConnection  : userConnection,
+    createConnection: createConnection,
+    updateConnection: updateConnection
   }
 }
