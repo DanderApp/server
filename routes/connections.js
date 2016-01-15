@@ -22,8 +22,8 @@ router.post('/new', function(req, res){
 // works
 router.get('/', function(req, res){
   console.log("I heard a get all!")
-  if(req.user){
-    crud.Connection.userConnection(req.user.id)
+  // if(req.user){
+    crud.Connection.userConnection(req.query.id)
 
     .then(function(data){
       return new Promise(function(resolve, reject){
@@ -50,9 +50,9 @@ router.get('/', function(req, res){
     .then(function(data){
       res.json(data);
     })
-  } else {
-    res.send("User not found")
-  }
+  // } else {
+  //   res.send("User not found")
+  // }
   //TEST DATA
   // res.json([{
   //     name: "Nellie",
