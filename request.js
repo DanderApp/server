@@ -11,7 +11,7 @@ var requestFunction = function(zipcode) {
         "output": 'basic',
         "animal": "dog",
         "location": zipcode || "80205",
-        "count": "5"
+        "count": "50"
       })
       .as.json(function(response) {
         resolve(response);
