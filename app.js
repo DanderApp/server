@@ -45,7 +45,8 @@ app.use(function(req, res, next) {
 app.use('/auth', auth.router);
 app.get('/dogs', function(req, res) {
   // var returnObject;
-  getRequestAPICall()
+  var zipcode = req.query.zipcode;
+  getRequestAPICall(zipcode)
   .then(function(data) {
     // returnObject = data;
     console.log('API Calling');
@@ -54,9 +55,9 @@ app.get('/dogs', function(req, res) {
   }).catch(function(){
     res.json('Something broke, yo!')
   })
-  .catch(function(err) {
-    console.log(err);
-  })
+  // .catch(function(err) {
+  //   console.log(err);
+  // })
 })
 
 //Authenticated Routes
@@ -70,7 +71,6 @@ app.use('/account', account);
 
 function getRequestAPICall(zipcode) {
   return new Promise(function(resolve,reject){
-    var zipcode = req.query.zipcode;
     request(zipcode)
     .then(function(data) {
       return filter.filter(data);
