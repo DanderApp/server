@@ -9,6 +9,7 @@ router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 //works
 router.post('/new', function(req, res){
+  console.log(req.body);
 
   console.log('User has interacted with pet ' +  req.body.petfinder_id)
   crud.Connection.createConnection(req.body.user_id, req.body.petfinder_id, req.body.liked)
