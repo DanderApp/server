@@ -125,6 +125,7 @@ function(req,res,next) {
 
 router.post('/signup',
 function(req,res,next) {
+  console.log(req.body);
   User().where({
     'email': req.body.email
   }).first().then(function(user){
