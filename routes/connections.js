@@ -50,7 +50,9 @@ router.get('/', function(req, res){
     .then(function(data){
       res.json(data);
     })
-  } 
+  } else {
+    res.send("User not found")
+  }
   //TEST DATA
   // res.json([{
   //     name: "Nellie",
