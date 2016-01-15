@@ -60,7 +60,7 @@ app.get('/dogs', function(req, res) {
 })
 
 //Authenticated Routes
-app.use(auth.authenticate);
+// app.use(auth.authenticate);
 app.use('/connections', connections);
 app.use('/', routes);
 app.use('/users', users);
