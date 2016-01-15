@@ -10,12 +10,17 @@ router.use(bodyParser.urlencoded({ extended: false }));
 //works
 router.post('/new', function(req, res){
   console.log(req.body);
-
   console.log('User has interacted with pet ' +  req.body.petfinder_id)
-  crud.Connection.createConnection(req.body.user_id, req.body.petfinder_id, req.body.liked)
-  .then(function(data){
-    console.log(data);
-    res.json({id:data[0]});
+  crud.Connection.checkConnection(req.body.user_id, req.body.petfinder_id).first().then(function(user){
+    if(user) {
+      throw new Error("Connection already exists")
+    } else {
+      crud.Connection.createConnection(req.body.user_id, req.body.petfinder_id, req.body.liked)
+      .then(function(data){
+        console.log(data);
+        res.json({id:data[0]});
+      })
+    }
   })
 })
 
