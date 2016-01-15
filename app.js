@@ -70,6 +70,7 @@ app.use('/account', account);
 
 function getRequestAPICall(zipcode) {
   return new Promise(function(resolve,reject){
+    var zipcode = req.query.zipcode;
     request(zipcode)
     .then(function(data) {
       return filter.filter(data);
