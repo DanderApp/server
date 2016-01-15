@@ -16,12 +16,13 @@ router.post('/new', function(req, res){
       throw new Error("Connection already exists")
     } else {
       crud.Connection.createConnection(req.body.user_id, req.body.petfinder_id, req.body.liked)
-      .then(function(data){
-        console.log(data);
-        res.json({id:data[0]});
-      })
-    }
-  }).catch(function(error) {
+    })
+  })
+  .then(function(data){
+    console.log(data);
+    res.json({id:data[0]})
+  })
+  .catch(function(error) {
     console.log(error);
   })
 })
