@@ -11,31 +11,13 @@ var requestFunction = function(zipcode) {
         "output": 'basic',
         "animal": "dog",
         "location": zipcode || "80205",
-        "count": "5"
+        "count": "100"
       })
       .as.json(function(response) {
         resolve(response);
       })
     })
 }
-
-var singletonRequest = function(pfid) {
-  return new Promise(function(resolve, reject) {
-    unirest.get('http://api.petfinder.com/pet.get')
-      .query({
-        'key': process.env.PF_Key,
-        'callback': '?',
-        'id': pfid
-      })
-      .as.json(function(response){
-        resolve(response)
-      });
-  })
-}
-
-// singletonRequest(30519898).then(function(response) {
-//   console.log(response.body);
-// })
 
 function stringParser(stringToParse) {
   return new Promise(function(resolve,reject) {
@@ -45,9 +27,9 @@ function stringParser(stringToParse) {
   })
 }
 
-function apiCall() {
+function apiCall(zipcode) {
   return new Promise(function(resolve, reject) {
-    requestFunction().then(function(response) {
+    requestFunction(zipcode).then(function(response) {
       return stringParser(response.body);
     })
     .then(function(response) {
@@ -56,19 +38,6 @@ function apiCall() {
   })
 }
 
-function singletonAPICall(pfid) {
-  return new Promise(function(resolve, reject) {
-    singletonRequest(pfid).then(function(response) {
-      return stringParser(response.body);
-    })
-    .then(function(response) {
-      resolve(response);
-    })
-  })
-}
 
-// singletonAPICall(30519898).then(function(data) {
-//   console.log(data);
-// })
 
 module.exports = apiCall;
