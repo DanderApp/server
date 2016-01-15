@@ -93,6 +93,8 @@ function petConnection(petID) {
 function userConnection(userID) {
   return connection().where({
     user_id: userID
+  }).whereNot({
+    liked: false
   }).select().then(function(user) {
     return user;
   })
