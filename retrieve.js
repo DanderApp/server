@@ -8,7 +8,7 @@ var requestFunction = function(petID) {
       .query({
         'key': process.env.PF_Key,
         "callback": "?",
-        "id" : "petID"
+        "id" : petID
       })
       .as.json(function(response) {
         resolve(response);
