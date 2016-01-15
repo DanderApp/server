@@ -9,8 +9,7 @@ router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 //works
 router.post('/new', function(req, res){
-  console.log(req.body);
-
+  // console.log(req.body);
   console.log('User has interacted with pet ' +  req.body.petfinder_id)
   crud.Connection.createConnection(req.body.user_id, req.body.petfinder_id, req.body.liked)
   .then(function(data){
@@ -22,9 +21,9 @@ router.post('/new', function(req, res){
 // works
 router.get('/', function(req, res){
   console.log("I heard a get all!")
-  // if(req.user){
-    crud.Connection.userConnection(req.query.id)
 
+  // if(req.user){
+  crud.Connection.userConnection(req.query.id)
     .then(function(data){
       return new Promise(function(resolve, reject){
         var petfinderArray = [];
@@ -42,6 +41,7 @@ router.get('/', function(req, res){
         }
         return Promise.all(promiseStack)
     })
+
     .then(function(petfinderArray){
       return new Promise(function(resolve, reject){
         resolve(filter.format(petfinderArray))
@@ -63,12 +63,17 @@ router.get('/', function(req, res){
   //     petfinder_id: "30519898",
   //     photo: "http://photos.petfinder.com/photos/pets/30519898/1/?bust=1440196130&width=500&-x.jpg"
   // }])
+
+  })
+  .then(function(data){
+    res.json(data);
+  })
 })
 
 //works
 router.get('/:id', function(req, res){
   console.log("I heard a get one!")
-  crud.Connection.checkConnection(req.user.id, req.params.petfinder_id)
+  crud.Connection.checkConnection(req.query.id, req.params.petfinder_id)
   .then(function(data){
     res.json(data);
   })
@@ -77,7 +82,7 @@ router.get('/:id', function(req, res){
 //works
 router.put('/:id', function(req, res){
   console.log("I heard an update!")
-  crud.Connection.updateConnection(req.user.id, req.body.petfinder_id, req.body.liked)
+  crud.Connection.updateConnection(req.query.id, req.body.petfinder_id, req.body.liked)
   .then(function(){
     res.json('Totally updated!')
   })

@@ -68,9 +68,9 @@ app.use('/account', account);
 
 // API Call Functions
 
-function getRequestAPICall() {
+function getRequestAPICall(zipcode) {
   return new Promise(function(resolve,reject){
-    request()
+    request(zipcode)
     .then(function(data) {
       return filter.filter(data);
     })
