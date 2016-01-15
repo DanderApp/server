@@ -71,7 +71,7 @@ router.get('/:id', function(req, res){
 })
 
 //works
-router.put('/', function(req, res){
+router.post('/unfriend', function(req, res){
   console.log("I heard an update!")
   crud.Connection.updateConnection(req.body.user_id, req.body.petfinder_id, req.body.liked)
   .then(function(){
