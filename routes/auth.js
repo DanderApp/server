@@ -99,10 +99,11 @@ function createToken(user, accessToken) {
 
 router.post('/login',
 function(req,res,next) {
+  console.log('authenticating');
   passport.authenticate('local',
   function(err, user, info) {
-    // if (err) next(err);
     if(user) {
+      console.log('user found');
       console.log("Check");
       createToken(user).then(function(token) {
         res.json({
@@ -111,20 +112,15 @@ function(req,res,next) {
       })
     }
     else {
+      console.log('invalid login');
       res.status(401).send('Invalid Login');
-      // next('Invalid Login');
     }
   })(req, res, next);
 });
 
-// router.post('/logout', authenticateUser,
-// function(req, res, next) {
-//   req.logout()
-//   res.status(200).send("Logged out successfully")
-// })
-
 router.post('/signup',
 function(req,res,next) {
+  console.log(req.body);
   User().where({
     'email': req.body.email
   }).first().then(function(user){
@@ -148,24 +144,6 @@ function(req,res,next) {
     }
   })
 })
-
-// router.get('/facebook',
-//   passport.authenticate('facebook', {authType: 'reauthenticate'}),
-//   function(req,res) {
-//     res.send('Request Working')
-// });
-//
-// router.get('/facebook/callback',
-//   passport.authenticate('facebook', { authType: 'reauthenticate', failureRedirect: '/' }),
-//   function(req, res) {
-//     // Successful authentication, redirect home.
-//     res.redirect('/');
-//   });
-//
-// router.get('/logout', function(req,res) {
-//   req.logout();
-//   res.redirect('/');
-// })
 
 module.exports = {
   router: router,
