@@ -42,7 +42,6 @@ app.use(function(req, res, next) {
 });
 
 //Public Routes
-
 app.use('/auth', auth.router);
 app.get('/dogs', function(req, res) {
   // var returnObject;
@@ -58,14 +57,13 @@ app.get('/dogs', function(req, res) {
   .catch(function(err) {
     console.log(err);
   })
-
 })
+app.use('/connections', connections);
 
 //Authenticated Routes
 app.use(auth.authenticate);
 app.use('/', routes);
 app.use('/users', users);
-app.use('/connections', connections);
 app.use('/account', account);
 
 // API Call Functions
