@@ -11,15 +11,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.post('/new', function(req, res){
   console.log(req.body);
   console.log('User has interacted with pet ' +  req.body.petfinder_id)
-  crud.Connection.checkConnection(req.body.user_id, req.body.petfinder_id).then(function(user){
-    if(user) {
-      console.log('throwing error \n', user);
-      throw new Error("Connection already exists")
-    } else {
-      console.log('adding connection \n');
-      crud.Connection.createConnection(req.body.user_id, req.body.petfinder_id, req.body.liked)
-    }
-  })
+  crud.Connection.createConnection(req.body.user_id, req.body.petfinder_id, req.body.liked)
   .then(function(data){
     console.log(data);
     res.json({id:data[0]})
