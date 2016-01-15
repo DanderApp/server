@@ -22,33 +22,37 @@ router.post('/new', function(req, res){
 // works
 router.get('/', function(req, res){
   console.log("I heard a get all!")
-  crud.Connection.userConnection(req.user.id)
+  if(req.user){
+    crud.Connection.userConnection(req.user.id)
 
-  .then(function(data){
-    return new Promise(function(resolve, reject){
-      var petfinderArray = [];
-      for(i=0; i<data.length; i++){
-        petfinderArray.push(data[i].petfinder_id);
-      }
-      // console.log(petfinderArray);
-      resolve(petfinderArray);
+    .then(function(data){
+      return new Promise(function(resolve, reject){
+        var petfinderArray = [];
+        for(i=0; i<data.length; i++){
+          petfinderArray.push(data[i].petfinder_id);
+        }
+        // console.log(petfinderArray);
+        resolve(petfinderArray);
+      })
     })
-  })
-  .then(function(petfinderArray){
-      var promiseStack = [];
-      for(i=0; i<petfinderArray.length; i++){
-        promiseStack.push(retrieve(petfinderArray[i]))
-      }
-      return Promise.all(promiseStack)
-  })
-  .then(function(petfinderArray){
-    return new Promise(function(resolve, reject){
-      resolve(filter.format(petfinderArray))
+    .then(function(petfinderArray){
+        var promiseStack = [];
+        for(i=0; i<petfinderArray.length; i++){
+          promiseStack.push(retrieve(petfinderArray[i]))
+        }
+        return Promise.all(promiseStack)
     })
-  })
-  .then(function(data){
-    res.json(data);
-  })
+    .then(function(petfinderArray){
+      return new Promise(function(resolve, reject){
+        resolve(filter.format(petfinderArray))
+      })
+    })
+    .then(function(data){
+      res.json(data);
+    })
+  } else {
+    res.send("User not found")
+  }
   //TEST DATA
   // res.json([{
   //     name: "Nellie",
