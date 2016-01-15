@@ -71,9 +71,9 @@ router.get('/:id', function(req, res){
 })
 
 //works
-router.put('/:id', function(req, res){
+router.put('/', function(req, res){
   console.log("I heard an update!")
-  crud.Connection.updateConnection(req.query.id, req.body.petfinder_id, req.body.liked)
+  crud.Connection.updateConnection(req.body.user_id, req.body.petfinder_id, req.body.liked)
   .then(function(){
     res.json('Totally updated!')
   })
