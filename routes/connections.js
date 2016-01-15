@@ -22,6 +22,7 @@ router.post('/new', function(req, res){
 // works
 router.get('/', function(req, res){
   console.log("I heard a get all!")
+  console.log(req.user.id)
   crud.Connection.userConnection(req.user.id)
 
   .then(function(data){
