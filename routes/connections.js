@@ -21,6 +21,8 @@ router.post('/new', function(req, res){
         res.json({id:data[0]});
       })
     }
+  }).catch(function(error) {
+    console.log(error);
   })
 })
 
