@@ -62,21 +62,21 @@ passport.use(new BearerStrategy(function(token, done) {
 
 //Functions
 
-function authenticateUser(req, res, next) {
-  passport.authenticate('bearer', function(err, user, info) {
-    console.log(user);
-    if(err || !user) {
-      if (err) {
-        next(err);
-      } else {
-        res.status(401).send('Not logged in')
-      }
-    } else {
-      req.user = user;
-      next()
-    }
-  })(req, res, next)
-}
+// function authenticateUser(req, res, next) {
+//   passport.authenticate('bearer', function(err, user, info) {
+//     console.log(user);
+//     if(err || !user) {
+//       if (err) {
+//         next(err);
+//       } else {
+//         res.status(401).send('Not logged in')
+//       }
+//     } else {
+//       req.user = user;
+//       next()
+//     }
+//   })(req, res, next)
+// }
 
 function createToken(user, accessToken) {
   return new Promise(function(resolve, reject){

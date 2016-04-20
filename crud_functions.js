@@ -1,3 +1,4 @@
+require('dotenv').load();
 var knex = require('./db/knex');
 var pg = require('pg');
 var config = {
@@ -5,7 +6,6 @@ var config = {
   connection: process.env.DATABASE_URL || 'postgres://localhost/dander',
   ssl: true
 }
-require('dotenv').load();
 
 var user = function() {
   return knex('user')
@@ -108,6 +108,16 @@ function updateConnection(userID, petID, liked){
     liked: liked
   })
 }
+
+user().select().where({
+  id: 88
+}).then(function(data) {
+  if (data.length < 1) {
+    console.log("Empty Array");
+  } else {
+    console.log('Full Array');
+  }
+})
 
 // Testing Zone
 // reqTest().then(function(data) {
